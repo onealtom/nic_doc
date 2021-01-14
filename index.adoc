@@ -1,0 +1,120 @@
+== 以太网 Overview
+
+=== MAC 帧
+
+IP数据加上IP的帧头，得到IP帧，IP帧再加上MAC帧头的格式得到MAC帧。
+但IP帧不限制长度，如果超过1500，需要IP数据分包。
+
+.MAC帧
+[#img-sunset]
+image::pic/eth/1.jpg[MAC帧]
+
+=== MAC 地址
+
+.MAC地址格式
+image::pic/eth/2.jpg[MAC地址格式]
+
+.MAC地址格式
+image::pic/eth/2021-01-07_18-39.png[MAC地址格式]
+
+.MAC地址格式
+image::pic/eth/2021-01-07_18-39_1.png[MAC地址格式]
+
+
+MAC驱动分析
+
+ENC28J60: buffer为纯IP数据，不含MAC地址，MAC地址需要预先设置
+XMACLITE: ping pong buffer 描述表，
+
+== 通常硬件层次模型
+
+
+
+OSI 网络7层模型，为什么分层？层可替换型，L3以上基本都是软件行为，各种协议组合起来称为协议栈，大量的应用使用TCP/IP协议栈来容纳。
+
+[[img-sunset]]
+image::pic/eth/2021-01-13_15-51.png[title="OSI 7层模型", alt="Sunset", width="300", height="200", link="https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B"]
+
+
+----
+MAC（Media Access Control）
+
++---------------+
+|CPU            |
+|       +-------+        +--------+
+|       | MDIO/ +--------+        |
+|       |SFPI2C |        |        |
+|       +-------+        |   PHY  |
+|       | MAC   |        |        +-------------+
+|       | MII/  |        |        |             |
+|       | RGMII/+--------+        |             |
+|       | GMII/ |        |        |             |
+|       | RGMII/|        |        |             |
+|       | SGMII |        |        |             |
+|       +-------+        +--------+             |
+|               |                               |铜(1000BASE-TX)/ 
++---------------+                               |光(1000BASE-SX)/
+                                                |...
++---------------+                               |
+|CPU            |                               |
+|       +-------+        +--------+             |
+|       | MDIO/ +--------+        |             |
+|       |SFPI2C |        |        |             |
+|       +-------+        |   PHY  |             |
+|       | MAC   |        |        |             |
+|       | MII/  |        |        |             |
+|       | RGMII/+--------+        +-------------+
+|       | GMII/ |        |        |
+|       | RGMII/|        |        |
+|       | SGMII |        |        |
+|       +-------+        +--------+
+|               |
++---------------+
+
+----
+
+----
++---------+
+|         |
+|         +---+ zynq gem0
+|         +---+ t3k cpu0 mac
+| 88E6321 +---+ t3k cpu1 mac
+|         +---+ RJ45
+|         +---+ SFP x 2
+|         |
++---------+
+
+
+----
+
+https://zh.wikipedia.org/wiki/%E5%90%89%E6%AF%94%E7%89%B9%E4%BB%A5%E5%A4%AA%E7%BD%91[物理层标准定义]
+
+.路由器内部框图
+image::pic/sw/route.png[路由器内部框图]
+
+
+|===
+|芯片/控制器 |内容
+
+|ENC28J60 |http://www.microchip.com.cn/newcommunity/Uploads/Download/Library/39662a_cn.pdf[ENC28J60 DS]
+
+|DM6446 EMAC| https://www.ti.com.cn/cn/lit/pdf/sprue24[DMSoC EMAC DS]
+
+|Xilinx Ethernet Lite MAC |info 6
+
+|Xilinx AXI Ethernet | info 5
+|===
+
+
+include::ENC28J60.adoc[ENC28J60]
+
+include::LITEMAC.adoc[LITEMAC]
+
+include::DMSOCEMAC.adoc[DMSOCEMAC]
+
+include::AXIETH.adoc[AXIETH]
+
+
+
+
+

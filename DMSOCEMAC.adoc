@@ -1,0 +1,7 @@
+== DM6446 EMAC
+
+
+
+=== Linux NIC驱动
+
+MAC(MII)控制器驱动，PHY(MDIO)驱动

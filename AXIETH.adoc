@@ -1,0 +1,9 @@
+== Xilinx AXI Ethernet
+
+
+
+https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842485/Linux+AXI+Ethernet+driver[WIKI Linux AXI Ethernet driver]
+
+https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/478937213/MPSoC+PS+and+PL+Ethernet+Example+Projects[WIKI MPSoC PS and PL Ethernet Example Projects]
+
+https://github.com/analogdevicesinc/linux/tree/2019_R2/drivers/net/ethernet/xilinx[Drivers code]
